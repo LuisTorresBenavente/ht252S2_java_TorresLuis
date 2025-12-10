@@ -9,8 +9,8 @@ import java.util.List;
 public class EquipoDAO {
 
     public boolean crearEquipo(Equipo equipo) {
-        String sql = "INSERT INTO equipos (codigo, tipo, marcas, modelo, so, almacenamiento, ram, estado, fecha_registro) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO equipos (codigo, tipo, marcas, modelo, so, almacenamiento, ram, estado, mantenimiento, fecha_registro) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -23,7 +23,8 @@ public class EquipoDAO {
             pstmt.setInt(6, equipo.getAlmacenamiento());
             pstmt.setInt(7, equipo.getRam());
             pstmt.setString(8, equipo.getEstado());
-            pstmt.setDate(9, Date.valueOf(equipo.getFechaRegistro()));
+            pstmt.setDate(9, equipo.getMantenimiento() != null ? Date.valueOf(equipo.getMantenimiento()) : null);
+            pstmt.setDate(10, Date.valueOf(equipo.getFechaRegistro()));
 
             int filasAfectadas = pstmt.executeUpdate();
             return filasAfectadas > 0;

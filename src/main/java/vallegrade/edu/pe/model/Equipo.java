@@ -30,6 +30,19 @@ public class Equipo {
         this.fechaRegistro = fechaRegistro;
     }
 
+    public Equipo(String codigo, String tipo, String marcas, String modelo, String so, int almacenamiento, int ram, String estado, LocalDate mantenimiento, LocalDate fechaRegistro) {
+        this.codigo = codigo;
+        this.tipo = tipo;
+        this.marcas = marcas;
+        this.modelo = modelo;
+        this.so = so;
+        this.almacenamiento = almacenamiento;
+        this.ram = ram;
+        this.estado = estado;
+        this.mantenimiento = mantenimiento;
+        this.fechaRegistro = fechaRegistro;
+    }
+
     public Equipo(int id, String codigo, String tipo, String marcas, String modelo, String so, int almacenamiento, int ram, String estado, LocalDate mantenimiento, LocalDate fechaRegistro) {
         this.id = id;
         this.codigo = codigo;

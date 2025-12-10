@@ -5,8 +5,10 @@ import vallegrade.edu.pe.model.Equipo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import vallegrade.edu.pe.utils.ConfiguracionEquipos;
 import vallegrade.edu.pe.utils.ModelosPorMarca;
@@ -167,6 +169,25 @@ public class EquipoView extends JFrame {
         tablaEquipos.setRowHeight(25);
         tablaEquipos.getSelectionModel().addListSelectionListener(e -> seleccionarEquipo());
 
+        // Configurar renderizador para las columnas de fecha
+        DefaultTableCellRenderer dateRenderer = new DefaultTableCellRenderer() {
+            private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            @Override
+            protected void setValue(Object value) {
+                if (value instanceof LocalDate) {
+                    setText(((LocalDate) value).format(formatter));
+                } else {
+                    setText("");
+                }
+            }
+        };
+        dateRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Aplicar el renderizador a las columnas 9 (Mantenimiento) y 10 (Registro)
+        tablaEquipos.getColumnModel().getColumn(9).setCellRenderer(dateRenderer);
+        tablaEquipos.getColumnModel().getColumn(10).setCellRenderer(dateRenderer);
+
         JScrollPane scrollPane = new JScrollPane(tablaEquipos);
         scrollPane.setPreferredSize(new Dimension(1000, 400));
         panel.add(scrollPane, BorderLayout.CENTER);
@@ -243,6 +264,12 @@ public class EquipoView extends JFrame {
                 txtRam.setText(String.valueOf(equipo.getRam()));
                 cbEstado.setSelectedItem(equipo.getEstado());
 
+                // Cargar la fecha de mantenimiento si existe
+                if (equipo.getMantenimiento() != null) {
+                    java.util.Date date = java.sql.Date.valueOf(equipo.getMantenimiento());
+                    spinnerMantenimiento.setValue(date);
+                }
+
                 actualizarEstado("Equipo seleccionado: " + equipo.getCodigo());
             }
         }
@@ -252,6 +279,14 @@ public class EquipoView extends JFrame {
         if (!validarCampos()) return;
 
         try {
+            // Obtener la fecha de mantenimiento del spinner
+            LocalDate fechaMantenimiento = null;
+            if (spinnerMantenimiento.getValue() != null) {
+                fechaMantenimiento = ((java.util.Date) spinnerMantenimiento.getValue()).toInstant()
+                        .atZone(java.time.ZoneId.systemDefault())
+                        .toLocalDate();
+            }
+
             Equipo equipo = new Equipo(
                 txtCodigo.getText(),
                 cbTipo.getSelectedItem().toString(),
@@ -261,6 +296,7 @@ public class EquipoView extends JFrame {
                     Integer.parseInt(txtAlmacenamiento.getText()),
                     Integer.parseInt(txtRam.getText()),
                     cbEstado.getSelectedItem().toString(),
+                    fechaMantenimiento,
                     LocalDate.now()
             );
 
