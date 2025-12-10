@@ -1,7 +1,8 @@
-package vallegrade.edu.pe.controller;
+package luis.torres.controller;
 
-import vallegrade.edu.pe.service.EquipoService;
-import vallegrade.edu.pe.model.Equipo;
+import luis.torres.model.Equipo;
+import luis.torres.service.EquipoService;
+
 import java.util.List;
 
 public class EquipoController {

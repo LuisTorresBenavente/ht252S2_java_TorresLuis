@@ -1,4 +1,4 @@
-package vallegrade.edu.pe.database;
+package luis.torres.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

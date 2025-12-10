@@ -1,7 +1,9 @@
-package vallegrade.edu.pe.service;
 
-import vallegrade.edu.pe.database.EquipoDAO;
-import vallegrade.edu.pe.model.Equipo;
+package luis.torres.service;
+
+import luis.torres.database.EquipoDAO;
+import luis.torres.model.Equipo;
+
 import java.util.List;
 
 public class EquipoService {

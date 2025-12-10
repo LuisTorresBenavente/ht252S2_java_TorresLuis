@@ -1,4 +1,4 @@
-package vallegrade.edu.pe.model;
+package luis.torres.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
