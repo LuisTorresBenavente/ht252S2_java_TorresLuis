@@ -80,7 +80,7 @@ public class EquipoView extends JFrame {
     private JPanel crearPanelFormulario() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createTitledBorder("Registro de Equipo"));
+        panel.setBorder(BorderFactory.createTitledBorder("Equipos Informaticos Registrados"));
 
         // Fila 1: Codigo, Tipo, Marca
         JPanel fila1 = new JPanel(new GridLayout(1, 3, 10, 0));
